@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Predictive Health</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@200&display=swap" rel="stylesheet">
+    <style>
+          .bck {
+            display: inline-block;
+            background: rgb(255, 255, 255);
+            border-radius: 8px;
+            width: 70%;
+            border: 2px solid #0e5c25;
+            padding-top: 50px;
+            padding-right: 30px;
+            padding-bottom: 50px;
+            padding-left: 80px;
+            font-family: 'Prompt', sans-serif;
+
+          }
+          .in{
+                font-family: 'Prompt', sans-serif;
+                font-size: 110%;
+                line-height: 2.2;
+                font-weight: 900;
+          }
+          .in2{
+                display: inline-block;
+                border-radius: 8px;
+                width: 95%;
+                border: 2px solid #0e5c25;
+                padding: 20px;
+                margin: 0 auto;
+                font-family: 'Prompt', sans-serif;
+                font-size: 110%;
+                line-height: 2.2;
+                font-weight: 600;
+          }
+
+          .image{
+                float: right;
+                width: 200px;
+                height: auto;
+                margin-right: auto;
+                display: block;
+          }
+          .drop-down-menu{
+                padding: 6px 8px;
+                color:rgb(0, 0, 0);
+                background-color:#ffffff;
+                border: 2px solid #0e5c25;
+                border-style:dashed;
+                cursor: pointer;
+                border-radius: 8px;
+                font-family: 'Prompt', sans-serif;
+                font-weight: 600;
+
+          }
+          .ex{
+                text-align: right;
+                margin: 10px;
+                font-size: 70%;
+                color: rgba(66, 66, 66, 0.445);
+          }
+          .button {
+                background-color: #286B6D;
+                border: none;
+                color: white;
+                padding: 10px 15px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 12px;
+          }
+
+    </style>
+
+</head>
+<body>
+ <div class ='bck'>
+  <img class ='image'  src="https://assets-global.website-files.com/60c5c9025063594e6cd453b9/60c5c902506359460bd453f5_ever-logo-638bcbe5031847a6ebbc31da705fee44.png">
+  <h1 style="color: #286B6D;">Find out your risk of type 2 diabetes</h1>
+    <div class ='in'>
+      <p style="margin: 20px;">Information submitted here will be used to estimate the diabetes risk chances for a single patient. What variables you provide will control which out of three different models will be used for the task.</p>
+      <p style="text-align: right;color: black; font-size: 70%; ">*please fill unknown value with 0*</p>
+    </div>
+
+     <!-- Inputs for our ML model -->
+      <form action="{{ url_for('predict')}}" method="get" enctype="multipart/form-data">
+        <div class ='in2'>
+          <h3>Behavior information</h3>
+          <p class = 'ex'> Required for all models</p>
+          <label for="patientSexName">Gender: </label>
+                        <select class ="drop-down-menu" name="patientSexName" id="patientSexName">
+                            <option value="0">Male</option>
+                            <option value="1">Female</option>
+                        </select>
+                        <br>
+                        Age: <input type="number" name="patientAge" required="required"/> <br>
+                        BPD: <input type="number" name="vital_bpd" required="required" value="80"/> <br>
+                        BPS: <input type="number" name="vital_bps" required="required" value="120"/> <br>
+                        Weight: <input type="number" name="vital_weight" required="required" step="any" /> <br>
+                        Height: <input type="number" name="vital_height" required="required" step="any"/> <br>
+                        Waist: <input type="number" name="vital_waist" required="required" step="any"/> <br>
+          <label for="exercise">Exercise: </label>
+                        <select class ="drop-down-menu" name="exercise" id="exercise">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                        <br>
+          <label for="alcohol">Alcohol: </label>
+                        <select class ="drop-down-menu" name="alcohol" id="alcohol">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                        <br>
+          <label for="smoking">Smoking: </label>
+                        <select class ="drop-down-menu" name="smoking" id="smoking">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                        <br>
+          <label for="narcotic">Narcotic: </label>
+                        <select class ="drop-down-menu" name="narcotic" id="narcotic">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                        <br>
+            Pulse: <input type="number" name="vital_pulse" required="required" step="any" value="80"/> <br>
+            Temperature: <input type="number" name="vital_temperature" required="required" step="any" value="37.0"/> <br>
+            Respiratory Rate: <input type="number" name="vital_rr" required="required" step="any" value="20"/> <br>
+        </div>
+
+        <br>
+        <br>
+
+        <div class ='in2'>
+          <h3>Related Diseases</h3>
+          <p class = 'ex'> Required for the second and third models</p>
+          <label for="hypertension_disease">Hypertension: </label>
+            <select class ="drop-down-menu" name="hypertension_disease" id="hypertension_disease">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <br>
+          <label for="hyperlipidaemia_disease">Hyperlipidaemia: </label>
+            <select class ="drop-down-menu" name="hyperlipidaemia_disease" id="hyperlipidaemia_disease">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <br>
+          <label for="kidney_stones_disease">Kidney Stones: </label>
+            <select class ="drop-down-menu" name="kidney_stones_disease" id="kidney_stones_disease">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <br>
+          <label for="chronic_kidney_disease">Chronic Kidney Disease: </label>
+            <select class ="drop-down-menu" name="chronic_kidney_disease" id="chronic_kidney_disease">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <br>
+          <label for="ischaemi_heart_disease">Ischaemi Heart Disease: </label>
+            <select class ="drop-down-menu" name="ischaemi_heart_disease" id="ischaemi_heart_disease">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <br>
+          <label for="stroke_disease">Stroke: </label>
+            <select class ="drop-down-menu" name="stroke_disease" id="stroke_disease">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <br>
+          <label for="gout_disease">Gout: </label>
+            <select class ="drop-down-menu" name="gout_disease" id="gout_disease">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <br>
+          <label for="pterygium_disease">Pterygium: </label>
+            <select class ="drop-down-menu" name="pterygium_disease" id="pterygium_disease">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <br>
+          <label for="chronic_obstructive_pulmonary_disease">Chronic Obstructive Pulmonary Disease: </label>
+            <select class ="drop-down-menu" name="chronic_obstructive_pulmonary_disease" id="chronic_obstructive_pulmonary_disease">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <br>
+          <label for="thyrotoxicosis_disease">Thyrotoxicosis: </label>
+            <select class ="drop-down-menu" name="thyrotoxicosis_disease" id="thyrotoxicosis_disease">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <br>
+
+        </div>
+        <br>
+        <br>
+
+        <div class ='in2'>
+          <h3>Complete Blood Count (CBC)</h3>
+          <p class = 'ex'> Required for the second and third models</p>
+            Fasting Glucose: <input type="number" name="Fasting_glucose" required="required" step="any"/> <br>
+            HbA1c: <input type="number" name="HbA1c" required="required" step="any"/> <br>
+            eGFR: <input type="number" name="eGFR" required="required" step="any"/> <br>
+            LDL cholesterol: <input type="number" name="LDL_cholesterol" required="required" step="any"/> <br>
+            HDL cholesterol: <input type="number" name="HDL_cholesterol" required="required" step="any"/> <br>
+            Cholesterol: <input type="number" name="Cholesterol" required="required" step="any"/> <br>
+            Triglyceride: <input type="number" name="Triglyceride" required="required" step="any"/> <br>
+
+        </div>
+        <br>
+        <br>
+        <div class ='in2'>
+          <h3>Complete Blood Count (CBC)</h3>
+          <p class = 'ex'> Required for the thrid models</p>
+            Creatinine: <input type="number" name="Creatinine" required="required" step="any"/> <br>
+            BUN: <input type="number" name="BUN" required="required" step="any"/> <br>
+            Potassium: <input type="number" name="Potassium" required="required" step="any"/> <br>
+            Sodium: <input type="number" name="Sodium" required="required" step="any"/> <br>
+            Chloride: <input type="number" name="Chloride" required="required" step="any"/> <br>
+            CO2: <input type="number" name="CO2" required="required" step="any"/> <br>
+      </div>
+
+
+
+        <button class = "button" type="submit">Predict</button>
+        <button class = "button" type="reset">Clear</button>
+      </form>
+    <br>
+    <br>
+  <b> {{ prediction_text }} </b>
+     <br>
+     <hr>
+     <h3>Models:</h3>
+     <p>Model 1: </p>
+     <p>Model 2: </p>
+     <p>Model 3: </p>
+
+     <br><br><BR><BR>
+     <hr>
+     <h3>Papers:</h3>
+      <p style="margin: 20px; font-size: 80%;">
+        Detection and Prediction of Diabetes Using Data Mining: A Comprehensive Review
+        <a href="https://ieeexplore.ieee.org/document/9354154" target="_blank">https://ieeexplore.ieee.org/document/9354154</a></p>
+      <p style="margin: 20px; font-size: 80%;">
+        Machine learning models for classification and identification of significant attributes to detect type 2 diabetes
+        <a href="https://link.springer.com/article/10.1007/s13755-021-00168-2" target="_blank">https://link.springer.com/article/10.1007/s13755-021-00168-2</a></p>
+      <p style="margin: 20px; font-size: 80%;">
+        Machine Learning Tools for Long-Term Type 2 Diabetes Risk Prediction
+        <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8828812/" target="_blank">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8828812/</a></p>
+      <p style="margin: 20px; font-size: 80%;">
+        Prediction of Type-2 Diabetes Mellitus Disease Using Machine Learning Classifiers and Techniques
+        <a href="https://www.frontiersin.org/articles/10.3389/fcomp.2022.835242/full" target="_blank">https://www.frontiersin.org/articles/10.3389/fcomp.2022.835242/full</a></p>
+
+ </div>
+
+
+</body>
+</html>
