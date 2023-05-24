@@ -9,7 +9,7 @@ import requests
 import pickle
 import pandas as pd
 import numpy as np
-#import shap
+import shap
 import matplotlib.pyplot as plt
 
 app = FastAPI()
@@ -34,11 +34,11 @@ def model0(df):
     pred0 = model0.predict_proba(x_norm0)
 
     # explaination
-    #model = model0.best_estimator_
-    #explainer = shap.TreeExplainer(model)
-    #shap_values = explainer.shap_values(df)
-    #shap.summary_plot(shap_values, df, show=False)
-    #plt.savefig('static/modelexplainer.png')
+    model = model0.best_estimator_
+    explainer = shap.TreeExplainer(model)
+    shap_values = explainer.shap_values(df)
+    shap.summary_plot(shap_values, df, show=False)
+    plt.savefig('static/modelexplainer.png')
 
     return pred0[0][1]
 
@@ -61,10 +61,10 @@ def model3(df):
     pred3 = model3.predict_proba(x_norm3)
 
     #model = model3.best_estimator_
-    #explainer = shap.LinearExplainer(model, df)
-    #shap_values = explainer.shap_values(df)
-    #shap.summary_plot(shap_values, df, show=False)
-    #plt.savefig('static/modelexplainer.png')
+    explainer = shap.LinearExplainer(model, df)
+    shap_values = explainer.shap_values(df)
+    shap.summary_plot(shap_values, df, show=False)
+    plt.savefig('static/modelexplainer.png')
 
     return pred3[0][1]
 
@@ -90,11 +90,11 @@ def model7(df):
     pred7 = model7.predict_proba(x_norm7)
 
     # explaination
-    #model = model7.best_estimator_
-    #explainer = shap.LinearExplainer(model, df)
-    #shap_values = explainer.shap_values(df)
-    #shap.summary_plot(shap_values, df, show=False)
-    #plt.savefig('static/modelexplainer.png')
+    model = model7.best_estimator_
+    explainer = shap.LinearExplainer(model, df)
+    shap_values = explainer.shap_values(df)
+    shap.summary_plot(shap_values, df, show=False)
+    plt.savefig('static/modelexplainer.png')
 
     return pred7[0][1]
 
