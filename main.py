@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 import uvicorn
 import requests
 import pickle
-import pandas as pdพีื
+import pandas as pd
 import numpy as np
 import shap
 import matplotlib.pyplot as plt
@@ -170,6 +170,7 @@ def predict(request:Request, patientSexName: float, patientAge: float,vital_bpd:
 
     result = response
     result2 = response2
+
     imgpath = request.url_for('static', path='modelexplainer.png')
 
     return templates.TemplateResponse('index.html', context={'request':request, 'prediction_text':result, 'prediction_text2':result2, 'img_url':imgpath})
