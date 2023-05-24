@@ -7,9 +7,9 @@ from fastapi.staticfiles import StaticFiles
 import uvicorn
 import requests
 import pickle
-import pandas as pdพีื
+import pandas as pd
 import numpy as np
-import shap
+#import shap
 import matplotlib.pyplot as plt
 
 app = FastAPI()
@@ -34,11 +34,11 @@ def model0(df):
     pred0 = model0.predict_proba(x_norm0)
 
     # explaination
-    model = model0.best_estimator_
-    explainer = shap.TreeExplainer(model)
-    shap_values = explainer.shap_values(df)
-    shap.summary_plot(shap_values, df, show=False)
-    plt.savefig('static/modelexplainer.png')
+    #model = model0.best_estimator_
+    #explainer = shap.TreeExplainer(model)
+    #shap_values = explainer.shap_values(df)
+    #shap.summary_plot(shap_values, df, show=False)
+    #plt.savefig('static/modelexplainer.png')
 
     return pred0[0][1]
 
